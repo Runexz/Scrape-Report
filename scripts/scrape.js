@@ -12,7 +12,7 @@ var scrape = function (cb) {
 
         var topics = [];
 
-        // Now, we grab every h2 within an article tag, and do the following:
+        // Now, we grab every class article-title and promo-summary tag, and do the following:
         $(".article-body").each(function (i, element) {
 
             var head = $(this).children(".article-title").text().trim();
