@@ -1,1 +1,31 @@
-// noteController.js
+var note = require("../models/note");
+var makeDate = require("../scripts/date");
+
+module.exports = {
+    get: function (data, cb) {
+        note.find({
+            _topicId: data._id
+        }, cb);
+    },
+    save: function (data, cb) {
+        var newNote = {
+            _topicId: data._id,
+            date: makeDate(),
+            noteText: data.noteText
+        };
+        note.create(newNote, function (err, doc) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log(doc);
+                cb(doc);
+            }
+        });
+    },
+    delete: function (data, cb) {
+        note.remove({
+            _id: data._id
+        }, cb);
+    }
+};
