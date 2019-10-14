@@ -1,5 +1,6 @@
 // Variable used to grab from NPM dependencies
 var express = require("express");
+var mongoose = require("mongoose");
 var expressHandlebars = require("express-handlebars");
 var bodyParser = require("body-parser");
 
@@ -29,6 +30,12 @@ app.use(bodyParser.urlencoded({
 
 // All requests go through the router middleware
 app.use(router);
+
+// If app is deployed, use the deployed database. Otherwise use the local database called mongoHeadlines
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// Connect to the mongo DB
+mongoose.connect(MONGODB_URI);
 
 // Listen on port
 app.listen(PORT, function () {
