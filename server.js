@@ -2,7 +2,7 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var expressHandlebars = require("express-handlebars");
-var bodyParser = require("body-parser");
+// var bodyParser = require("body-parser");
 
 
 // Port to be either the host's port or 3000
@@ -14,8 +14,11 @@ var app = express();
 // Sets up Express router
 var router = express.Router();
 
+// Require routes file
+require("./config/routes")(router);
+
 // Directs the public folder as a static directory
-app.use(express.static(_dirname + "/public"));
+app.use(express.static("public"));
 
 // Connect handlebars to our express application
 app.engine("handlebars", expressHandlebars({
@@ -23,10 +26,14 @@ app.engine("handlebars", expressHandlebars({
 }));
 app.set("view engine", "handlebars");
 
+// Parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Use NPM body-parser in the app
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+// app.use(bodyParser.urlencoded({
+//     extended: false
+// }));
 
 // All requests go through the router middleware
 app.use(router);
@@ -35,7 +42,14 @@ app.use(router);
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // Connect to the mongo DB
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    })
+    .then(() => console.log('DB Connected!'))
+    .catch(err => {
+    console.log(`db error ${err.message}`);
+    });
 
 // Listen on port
 app.listen(PORT, function () {
