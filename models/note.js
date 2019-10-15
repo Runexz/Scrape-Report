@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var noteSchema = new Schema({
     _topicId: {
         type: Schema.Types.ObjectId,
-        ref: "Topic"
+        ref: "topic"
     },
     date: String,
     noteText: String
@@ -15,5 +15,5 @@ var noteSchema = new Schema({
 // This creates our model from the above schema, using mongoose's model method
 var Note = mongoose.model("Note", noteSchema);
 
-// Export the Topic model
+// Export the Note model
 module.exports = Note;
