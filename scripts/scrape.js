@@ -13,13 +13,13 @@ var scrape = function (cb) {
         var topics = [];
 
         // Now, we grab every class article-title and promo-summary tag, and do the following:
-        $(".article-body").each(function (i, element) {
+        $("div.article-summary").each(function (i, element) {
 
-            var head = $(this).children(".article-title").text().trim();
-            var sum = $(this).children(".promo-summary").text().trim();
+            var headline = $(this).children("h2").text().trim();
+            var sum = $(this).children("p").text().trim();
 
-            if (head && sum) {
-                var headNeat = head.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+            if (headline && sum) {
+                var headNeat = headline.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
                 var sumNeat = sum.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
 
                 var dataTogether = {
@@ -35,3 +35,42 @@ var scrape = function (cb) {
 };
 
 module.exports = scrape;
+
+// // Making a request via axios for `nhl.com`'s homepage
+// axios.get("https://www.gameinformer.com").then(function(response) {
+
+//   // Load the body of the HTML into cheerio
+//   var $ = cheerio.load(response.data);
+
+//   // Empty array to save our scraped data
+//   var results = [];
+
+//   // With cheerio, find each h4-tag with the class "headline-link" and loop through the results
+//   $("div.article-summary").each(function(i, element) {
+
+//     // Save the text of the h4-tag as "title"
+//     var title = $(element).children("h2").text();
+
+//     var summary = $(element).children("p").text();
+
+//     var link = $(element).children("h2").children("a").attr("href");
+
+//     if (title && summary && link) {
+//       var titleNeat = title.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+//       var summaryNeat = summary.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+//       var linkNeat = link.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+
+//       var neatTogether = {
+//           title: titleNeat,
+//           summary: summaryNeat,
+//           link: linkNeat
+//       };
+
+//       results.push(neatTogether);
+//   }
+
+//   });
+  
+//   // After looping through each h4.headline-link, log the results
+//   console.log(results);
+// });
