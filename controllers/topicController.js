@@ -2,7 +2,7 @@ var scrape = require("../scripts/scrape");
 var makeDate = require("../scripts/date");
 
 
-var topic = require("../models/topic");
+var Topic = require("../models/topic");
 
 module.exports = {
     fetch: function (cb) {
@@ -13,16 +13,16 @@ module.exports = {
                 articles[i].saved = false;
             }
 
-            topic.collection.insertMany(articles, { ordered: false }, function (err, docs) {
+            Topic.collection.insertMany(articles, { ordered: false }, function (err, docs) {
                 cb(err, docs);
             });
         });
     },
     delete: function (query, cb) {
-        topic.remove(query, cb);
+        Topic.remove(query, cb);
     },
     get: function (query, cb) {
-        topic.find(query)
+        Topic.find(query)
             .sort({
                 _id: -1
             })
@@ -31,7 +31,7 @@ module.exports = {
             });
     },
     update: function (query, cb) {
-        topic.update({ _id: query._id }, {
+        Topic.update({ _id: query._id }, {
             $set: query
         }, {}, cb);
     }
