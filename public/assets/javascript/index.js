@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         // Empties the article container, run an AJAX request for any unsaved topics
         articleContainer.empty();
-        $.get("/api/headlines?saved=false")
+        $.get("/api/topics?saved=false")
             .then(function (data) {
 
                 if (data && data.length) {
