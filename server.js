@@ -38,8 +38,8 @@ app.use(express.json());
 // All requests go through the router middleware
 app.use(router);
 
-// If app is deployed, use the deployed database. Otherwise use the local database called mongoHeadlines
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// If app is deployed, use the deployed database. Otherwise use the local database called gamingHeadlines
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/gameingHeadlines";
 
 // Connect to the mongo DB
 mongoose.connect(MONGODB_URI, {
